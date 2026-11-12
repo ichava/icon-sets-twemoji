@@ -83,9 +83,9 @@ it(description: 'names the pack by its current name everywhere outside its histo
         }
     }
 
-    // The 3,435 SVGs plus the code, docs and workflows: a scan that stops
+    // The 3,444 SVGs plus the code, docs and workflows: a scan that stops
     // finding files reports a clean tree rather than a broken search.
-    expect(count($files))->toBeGreaterThan(3_435)
+    expect(count($files))->toBeGreaterThan(3_444)
         ->and($offenders)->toBe([], 'the former pack name is back in: ' . implode(', ', $offenders));
 });
 
