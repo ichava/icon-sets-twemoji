@@ -5,7 +5,7 @@
 [![Static analysis](https://github.com/ichava/icon-sets-twemoji/actions/workflows/code-quality.yml/badge.svg)](https://github.com/ichava/icon-sets-twemoji/actions/workflows/code-quality.yml)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-> Emoji for the Ichava Laravel icon ecosystem: 3,435 Twemoji SVGs.
+> Emoji for the Ichava Laravel icon ecosystem: 3,444 Twemoji SVGs.
 
 Requires [`ichava/core`](https://github.com/ichava/core) `^0.1` on PHP `^8.4.1 || ^8.5` and Laravel `^13`.
 

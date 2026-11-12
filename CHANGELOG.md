@@ -4,6 +4,10 @@ All notable changes to `ichava/icon-sets-twemoji` follow [Keep a Changelog](http
 
 ## [Unreleased]
 
+### Added
+
+- **The 9 emoji components in `twemoji/component/`**: the five skin tones and the four hair styles (`bald`, `curly-hair`, `red-hair`, `white-hair`). Unicode lists them in `emoji-test.txt` with the status `component` rather than `fully-qualified`, and icon-sets-sync's CLDR parser now reads both (owner, 2026-11-12, "yes"), so the forced sync of upstream 15.0.0 adds them; nothing else changed. The pack ships 3,444 SVGs, and the README, `composer.json`, the docs and two test floors say so.
+
 ### Fixed
 
 - **`keycap: *` ships as `symbols/keycap-asterisk.svg`** in `openmoji-color` and `openmoji-black`, instead of being lost to `keycap: #`. Both names slug to `keycap`; the sync now gives the first in Unicode order the base slug and the later one a name read from its own (icon-sets-sync#91). `symbols/keycap.svg` is still `keycap: #`, as shipped. Each OpenMoji set goes from 3,566 to 3,567 SVGs. Re-synced on icon-sets-sync `00579ad`; the other 3,566 changes per set are root attribute order (`xmlns` last, as upstream writes it) and upstream's `color` kept, with no artwork change. Twemoji is unchanged.

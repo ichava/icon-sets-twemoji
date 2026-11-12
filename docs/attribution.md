@@ -18,7 +18,7 @@ authoritative version and travels with the assets.
 ## The integration is separately licensed
 
 The provider, enums, component and configuration in this repository are MIT under `Simtabi LLC`
-(see [`LICENSE`](../LICENSE)). The artwork licence above applies to the 3,435 SVGs this package
+(see [`LICENSE`](../LICENSE)). The artwork licence above applies to the 3,444 SVGs this package
 vendors under `resources/assets/svg/files/`. Simtabi LLC redistributes them and claims no authorship
 of them.
 
