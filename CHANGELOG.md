@@ -4,24 +4,20 @@ All notable changes to `ichava/icon-sets-twemoji` follow [Keep a Changelog](http
 
 ## [Unreleased]
 
+## [0.1.0] - TBD
+
+First release of `ichava/icon-sets-emoji`. The repository is published as a single commit; the 0.1.x tags cut between 2026-10-23 and 2026-10-27 (v0.1.0 to v0.1.1) are folded into this release, and their notes are kept below under *Archived history*.
+
 ### Added
 
 - **The 9 emoji components in `twemoji/component/`**: the five skin tones and the four hair styles (`bald`, `curly-hair`, `red-hair`, `white-hair`). Unicode lists them in `emoji-test.txt` with the status `component` rather than `fully-qualified`, and icon-sets-sync's CLDR parser now reads both (owner, 2026-11-12, "yes"), so the forced sync of upstream 15.0.0 adds them; nothing else changed. The pack ships 3,444 SVGs, and the README, `composer.json`, the docs and two test floors say so.
 
-### Fixed
-
-- **`keycap: *` ships as `symbols/keycap-asterisk.svg`** in `openmoji-color` and `openmoji-black`, instead of being lost to `keycap: #`. Both names slug to `keycap`; the sync now gives the first in Unicode order the base slug and the later one a name read from its own (icon-sets-sync#91). `symbols/keycap.svg` is still `keycap: #`, as shipped. Each OpenMoji set goes from 3,566 to 3,567 SVGs. Re-synced on icon-sets-sync `00579ad`; the other 3,566 changes per set are root attribute order (`xmlns` last, as upstream writes it) and upstream's `color` kept, with no artwork change. Twemoji is unchanged.
-- **Stray text line removed from `openmoji-color/travel-places/high-speed-train.svg`** (a lone `d` between `<g id="color">` and its first path, shipped by upstream OpenMoji 15.1.0; the same line icon-sets-openmoji#4 removed). The icon generator refuses such a file. A scan of all 10,567 SVGs found no other. Only that line changed.
-- **`tests/Unit/NoStrayTextNodesTest.php`** fails on any text directly under `<svg>` or `<g>` in the pack, floored at 10,569 files since `keycap-asterisk` was added (10,567 before). Proven red on the unfixed file.
-
-### Added
 
 - **The upstream licence texts, as the sync's licence sink writes them** (owner decision, 2026-11-05): `resources/assets/svg/licenses/twemoji/license` from the `@twemoji/svg` npm package, and `licenses/openmoji-color/LICENSE.txt` and `licenses/openmoji-black/LICENSE.txt` from the OpenMoji 15.1.0 release. Every sync wanted to add them and the pack had never tracked them, so each run reported licence changes. `ATTRIBUTION.md` is unchanged.
 - **`kinds.rules` and `items`** (both empty) in `config.json`, the two kind keys of the kinds-and-flavours contract (§1) beside the existing `package.kind`. Empty, they change no icon's kind.
 
-### Removed
-
-- **The `openmoji-color` and `openmoji-black` sets** (owner, 2026-11-05: forward-only, "Yes, remove them"): 7,134 SVGs, their licence directories, their `config.json` categories and `deprecated` markers, the OpenMoji author, CDN templates and `additional_sources` entry, the `Set::OPENMOJI_COLOR` and `Set::OPENMOJI_BLACK` cases, their translations, `OpenmojiDeprecationTest` and its `OpenmojiPack`, `OldIdUse` and `CleanHost` fixtures. OpenMoji is in [`ichava/icon-sets-openmoji`](https://github.com/ichava/icon-sets-openmoji), whose `EmojiOpenmojiSupersetTest` checks, against a manifest of all 7,134, that it holds every one at the same path and bytes (ichava/icon-sets-openmoji#11). An `ichava/icon-sets-emoji::openmoji-*` id no longer resolves; use `ichava/icon-sets-openmoji::openmoji-color/...`. This pack now ships 3,435 Twemoji SVGs; the README, composer description, docs and the `NoStrayTextNodesTest` floor say so. `tests/Unit/TwemojiOnlyTest.php` fails if another set, licence directory or category returns.
+- **The pack declares its SVG kind.** `config.json` sets `package.kind` to `icon`, the kind ichava/core resolves for every category that names none of its own (core reads it from ichava/core#148; an older core ignores the key). `tests/Feature/SvgKindTest.php` fails on a kind core would not recognise, on a category that resolves none, and, against a core that has `IconRegistry::kindFor()`, on any category core resolves differently. `RetiredCopiesTest` also pins a non-empty description for every label core loads.
+- **`SiblingConstraintsTest` keeps every `ichava/*` constraint on the released line.** At release every ichava repository becomes one commit tagged `v0.1.0`, so 0.1.0 is the only version of any sibling. The test reads `require` and `require-dev` in `composer.json`, fails on any `ichava/*` constraint that 0.1.0 does not satisfy (checked with `composer/semver`, now a direct dev requirement), and fails when it finds no constraint to check.
 
 ### Changed
 
@@ -35,29 +31,6 @@ All notable changes to `ichava/icon-sets-twemoji` follow [Keep a Changelog](http
 - **Documentation links point at each repository's own `docs/`** (Sim, 2026-11-03: "all ichava repos have docs in their respective repos. thats by design"). Links to `opensource.simtabi.com/documentation/ichava/...` and the `opensource.simtabi.com/products/ichava/...` homepage, which answer 404 for every ichava page, now go to the matching `docs/*.md` on GitHub, or to the repository itself. Each target was checked to exist on that repository's `main`. The manifest's `homepage` and `support.docs` follow.
 - **The author and contact address is `ichava@simtabi.com`** (W-11, Sim 2026-11-03), replacing the community address `opensource@simtabi.com` wherever this repository named it. Vulnerability reports still go to `security@simtabi.com`. The test that guards the address expects `ichava@` now.
 
-### Fixed
-
-- `docs/sets.md` no longer says the package ships no SVGs, and its examples use core's `<x-ichava::icon>` tag and `::` separator. `docs/getting-started.md` no longer links a `customization.md` that does not exist.
-
-- The weekly upstream sync opens its pull request with a Refresh Bot token. GitHub Actions' own
-  token is not allowed to create pull requests in this organisation, so the sync failed at its last
-  step after refreshing the assets.
-
-### Security
-
-- **Every workflow declares a top-level `permissions: contents: read`** (S9), so its token no longer depends on the organisation's default. None of these jobs writes. `tests/Unit/WorkflowPermissionsTest.php` fails if a workflow loses the block.
-
-## [0.1.0] - TBD
-
-First release of `ichava/icon-sets-emoji`. The repository is published as a single commit; the 0.1.x tags cut between 2026-10-23 and 2026-10-27 (v0.1.0 to v0.1.1) are folded into this release, and their notes are kept below under *Archived history*.
-
-### Added
-
-- **The pack declares its SVG kind.** `config.json` sets `package.kind` to `icon`, the kind ichava/core resolves for every category that names none of its own (core reads it from ichava/core#148; an older core ignores the key). `tests/Feature/SvgKindTest.php` fails on a kind core would not recognise, on a category that resolves none, and, against a core that has `IconRegistry::kindFor()`, on any category core resolves differently. `RetiredCopiesTest` also pins a non-empty description for every label core loads.
-- **`SiblingConstraintsTest` keeps every `ichava/*` constraint on the released line.** At release every ichava repository becomes one commit tagged `v0.1.0`, so 0.1.0 is the only version of any sibling. The test reads `require` and `require-dev` in `composer.json`, fails on any `ichava/*` constraint that 0.1.0 does not satisfy (checked with `composer/semver`, now a direct dev requirement), and fails when it finds no constraint to check.
-
-### Changed
-
 - **Every workflow runs on every pull request.** The `paths-ignore: '**.md'` and `paths:` filters are removed from the `pull_request` triggers, so every check reports on every pull request and can be a required status check on `main`. A path-filtered required check never reports on the pull requests it skips, and blocks them for good.
 - **PHPStan analyses at level `max`, up from 0.** `phpstan.neon.dist` now has icon-sets-bundled's shape: one counted, path-scoped ignore for the two `HasIconSetVariants` hooks PHPStan reports as unused because the trait calls them through `static::`, with `reportUnmatchedIgnoredErrors` failing the run if either stops occurring. No baseline, and no source change was needed. `PhpstanLevelTest` reads the config and fails if the level is anything but `max` or a baseline appears.
 - **`sync-upstream.yml` commits as the github-actions bot's noreply address** instead of a personal GitHub login, matching packs scaffolded since icon-sets-package-scaffolder#60 and icon-sets-sync's default. The personal-contact guard now also reads `.github/` and `.dev/`.
@@ -70,8 +43,27 @@ First release of `ichava/icon-sets-emoji`. The repository is published as a sing
 
 ### Removed
 
+- **The `openmoji-color` and `openmoji-black` sets** (owner, 2026-11-05: forward-only, "Yes, remove them"): 7,134 SVGs, their licence directories, their `config.json` categories and `deprecated` markers, the OpenMoji author, CDN templates and `additional_sources` entry, the `Set::OPENMOJI_COLOR` and `Set::OPENMOJI_BLACK` cases, their translations, `OpenmojiDeprecationTest` and its `OpenmojiPack`, `OldIdUse` and `CleanHost` fixtures. OpenMoji is in [`ichava/icon-sets-openmoji`](https://github.com/ichava/icon-sets-openmoji), whose `EmojiOpenmojiSupersetTest` checks, against a manifest of all 7,134, that it holds every one at the same path and bytes (ichava/icon-sets-openmoji#11). An `ichava/icon-sets-emoji::openmoji-*` id no longer resolves; use `ichava/icon-sets-openmoji::openmoji-color/...`. This pack now ships 3,435 Twemoji SVGs; the README, composer description, docs and the `NoStrayTextNodesTest` floor say so. `tests/Unit/TwemojiOnlyTest.php` fails if another set, licence directory or category returns.
+
 - **The `commands` and `info` translation groups.** They were written for an update command and an about block this pack does not ship (core's about section reads the registry), and nothing loaded them. `tests/Feature/RetiredCopiesTest.php` keeps them out.
 - **`set.name` and `set.prefix` from the config file.** Both copied what core already reads from `config.json` through `IconsConstants`, and nothing read them. The file keeps its one real setting, `default_set`.
+
+### Fixed
+
+- **`keycap: *` ships as `symbols/keycap-asterisk.svg`** in `openmoji-color` and `openmoji-black`, instead of being lost to `keycap: #`. Both names slug to `keycap`; the sync now gives the first in Unicode order the base slug and the later one a name read from its own (icon-sets-sync#91). `symbols/keycap.svg` is still `keycap: #`, as shipped. Each OpenMoji set goes from 3,566 to 3,567 SVGs. Re-synced on icon-sets-sync `00579ad`; the other 3,566 changes per set are root attribute order (`xmlns` last, as upstream writes it) and upstream's `color` kept, with no artwork change. Twemoji is unchanged.
+- **Stray text line removed from `openmoji-color/travel-places/high-speed-train.svg`** (a lone `d` between `<g id="color">` and its first path, shipped by upstream OpenMoji 15.1.0; the same line icon-sets-openmoji#4 removed). The icon generator refuses such a file. A scan of all 10,567 SVGs found no other. Only that line changed.
+- **`tests/Unit/NoStrayTextNodesTest.php`** fails on any text directly under `<svg>` or `<g>` in the pack, floored at 10,569 files since `keycap-asterisk` was added (10,567 before). Proven red on the unfixed file.
+
+
+- `docs/sets.md` no longer says the package ships no SVGs, and its examples use core's `<x-ichava::icon>` tag and `::` separator. `docs/getting-started.md` no longer links a `customization.md` that does not exist.
+
+- The weekly upstream sync opens its pull request with a Refresh Bot token. GitHub Actions' own
+  token is not allowed to create pull requests in this organisation, so the sync failed at its last
+  step after refreshing the assets.
+
+### Security
+
+- **Every workflow declares a top-level `permissions: contents: read`** (S9), so its token no longer depends on the organisation's default. None of these jobs writes. `tests/Unit/WorkflowPermissionsTest.php` fails if a workflow loses the block.
 
 ## [Archived history]
 
